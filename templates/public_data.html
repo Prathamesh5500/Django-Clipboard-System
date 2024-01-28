@@ -1,0 +1,115 @@
+<!-- public_data.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Public Data Display</title>
+    <!-- Include any necessary stylesheets or scripts here -->
+
+    <style>
+      /* Style for public text items */
+      #allTextsContainer .public-text,
+      #allTextsContainer .public-text {
+        background-color: #ffffff; /* White background color */
+        border: 1px solid #ced4da; /* Bootstrap light gray border color */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light box shadow */
+        padding: 20px;
+        margin-bottom: 20px;
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+
+      #allTextsContainer .public-text p,
+      #allTextsContainer .public-text p {
+        margin: 0;
+        color: #333; /* Text color */
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Public Data</h1>
+
+    <ul id="publicDataList">
+      {% if all_texts %}
+          <ul id="allTextsContainer">
+              {% for text_obj in all_texts reversed %}
+                  <div class="public-text">
+                      <p>{{ text_obj.username }} - {{ text_obj.dt }} {{ text_obj.tm }}</p>
+                      <p>{{ text_obj.text }}</p>
+                  </div>
+              {% endfor %}
+          </ul>
+      {% else %}
+          <p>No texts available.</p>
+      {% endif %}
+  </ul>
+    <script>
+      // Function to set the mode in localStorage
+      function setMode(mode) {
+        localStorage.setItem("mode", mode);
+      }
+
+      // Function to get the mode from localStorage
+      function getMode() {
+        return localStorage.getItem("mode");
+      }
+
+      // Function to apply the mode
+      function applyMode(mode) {
+        let body = document.querySelector("body");
+        let textElements = document.querySelectorAll(".text-content"); // Adjust the selector based on your structure
+        let h1element = document.querySelector("h1");
+
+        if (mode === "dark") {
+          body.style.background = "#343a40";
+          body.style.color = "black";
+          h1element.style.color = "white";
+
+          // Apply white text color to text elements in dark mode
+          textElements.forEach((element) => {
+            element.style.color = "white";
+          });
+        } else {
+          body.style.background = "white";
+          body.style.color = "black";
+          h1element.style.color = "black";
+
+          // Apply black text color to text elements in light mode
+          textElements.forEach((element) => {
+            element.style.color = "black";
+          });
+        }
+      }
+
+      // Check if the mode is stored in localStorage
+      let storedMode = getMode();
+
+      // If the mode is stored, apply it; otherwise, set the default mode
+      if (storedMode) {
+        applyMode(storedMode);
+      } else {
+        setMode("light"); // Set the default mode if not stored
+      }
+
+      let modebtn = document.querySelector("#mode");
+      let currmode = storedMode || "light"; // Use stored mode or default
+
+      modebtn.addEventListener("click", () => {
+        if (currmode === "light") {
+          currmode = "dark";
+          setMode(currmode); // Save the mode in localStorage
+        } else {
+          currmode = "light";
+          setMode(currmode);
+        }
+        applyMode(currmode);
+      });
+    </script>
+  </body>
+</html>
