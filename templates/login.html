@@ -20,10 +20,10 @@
         <h3>Login Here</h3>
         {% csrf_token %}
         <label for="username">Username</label>
-        <input type="text" placeholder="Enter Username" id="username" name="username" value="Prathamesh">
+        <input type="text" placeholder="Enter Username" id="username" name="username" >
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password" name="pass" value="1234">
+        <input type="password" placeholder="Password" id="password" name="pass" >
 
         <button type="submit">Log In</button>
         <a href="{% url 'signup' %}" >Create an account</a>
