@@ -51,7 +51,7 @@ def SignupPage(request):
             return HttpResponse("Username already taken. Please choose a different one.")
 
         if pass1!=pass2:
-            return HttpResponse("Your password and confrom password are not Same!!")
+            return HttpResponse("Your password and confirm password are not Same!!")
         else:
 
             my_user=User.objects.create_user(uname,email,pass1)
